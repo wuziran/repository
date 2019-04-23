@@ -38,4 +38,11 @@ public class EmpController {
 		System.out.println(map);
 		return map;
 	}
+	
+	@RequestMapping("empupdate")
+	public int empdupdate(Emp emp){
+		int i = es.Empupdate(emp);
+		return i;
+	}
+	
 }

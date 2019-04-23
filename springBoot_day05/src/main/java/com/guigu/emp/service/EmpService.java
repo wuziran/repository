@@ -37,4 +37,9 @@ public class EmpService {
 		map.put("emp", empselect);
 		return map;
 	}
+	
+	public int Empupdate(Emp emp){
+		int i = updatemapper.Empupdate(emp);
+		return i;
+	}
 }

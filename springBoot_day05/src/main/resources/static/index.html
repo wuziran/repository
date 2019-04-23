@@ -20,10 +20,18 @@
 		<a href="javascript:show()" class="easyui-linkbutton" iconCls="icon-search">查询</a>
 	</div>
 </table> 
-<!-- <form id="manage_edit" style="margin:0;padding:5px 0 0 25px;color:#333;">
-	<p>编&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号:<input readonly="readonly" id="id" name="id" class="textbox" style="width:200px;"></p>
-	<p>名&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;称:<input type="text" id="dname" name="dname" class="textbox" style="width:200px;"></p>
-</form> -->
+<form id="manage_edit" style="margin:0;padding:5px 0 0 25px;color:#333;">
+		<font name="font" style="display: none;"></font>
+	<p>员工编号:<input readonly="readonly" id="num" name="num" class="textbox" style="width:200px;"></p>
+	<p>员工姓名:<input type="text" id="name" name="name" class="textbox" style="width:200px;"></p>
+	<p>性&nbsp;&nbsp;别:<input type="radio" checked="checked" name="name">
+						<input type="radio" checked="checked" name="name"></p>
+	<p>生日:<input type="text" name="name" class="textbox" style="width:200px;"></p>
+	<p>电话:<input type="text" name="name" class="textbox" style="width:200px;"></p>
+	<p>地址:<input type="text" name="name" class="textbox" style="width:200px;"></p>
+	<p>职务:<input type="text" name="name" class="textbox" style="width:200px;"></p>
+	<p>部门:<select name="select11"></select></p>
+</form>
 <!-- <form id="manage_add" style="margin: 0;padding: 5px 0 0 25px;color:#333;font-size: 20px;">
 	<p>名&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;称:
 		<input type="text" name="username" class="textbox" style="width: 200px;height: 30px;"/>
@@ -36,9 +44,9 @@
 </style>
 		<script>
 		$(function (){
-			/* $.ajax({
+			$.ajax({
 				type: "post",
-				url: "findBaseDict.do",
+				url: "findDept",
 				async: true,
 				beforeSend: function() {
 					$.messager.progress({
@@ -47,19 +55,19 @@
 				},
 				success: function(data) {
 					$.messager.progress('close');
-					$('#job').empty();
+					$('#dept').empty();
 					var tr="<option value=''>请选择</option>";
-					 $('#job').append(tr);
+					 $('#dept').append(tr);
 					$.each(data, function(i, n){
-						  var tr1="<option value='"+n.dictId+"'>"+n.dictName+"</option>";
-						  $('#job').append(tr1);
+						  var tr1="<option value='"+n.deptname+"'>"+n.deptname+"</option>";
+						  $('#dept').append(tr1);
 					});
 				},
 				error: function() {
 					$.messager.alert('警告操作', '服务器返回数据失败', 'warning');
 				}
 
-			});  */
+			}); 
 			
 		})
 			function show(){
@@ -92,10 +100,10 @@
 							} else if(rows.length == 1) {
 								$.ajax({
 									type: "post",
-									url: "showById.do",
+									url: "empselect",
 									async: true,
 									data: {
-										id: rows[0].custId,
+										id: rows[0].id,
 									},
 									beforeSend: function() {
 										$.messager.progress({
@@ -104,10 +112,8 @@
 									},
 									success: function(data) {
 										$.messager.progress('close');
-										$('#manage_edit').form('load', {
-											id: data.id,
-											dname: data.dname,
-										}).dialog('open');
+										$('#manage_edit').dialog('open');
+										var input = "";
 
 									},
 									error: function() {
@@ -215,7 +221,7 @@
 				text: '提交',
 				handler: function() {
 					$.ajax({
-						url: "updateDept.do",
+						url: "updatedept",
 						type: "post",
 						data: {
 							id: $('#id').val(),
