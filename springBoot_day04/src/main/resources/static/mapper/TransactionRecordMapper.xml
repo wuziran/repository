@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.guigu.dao.TransactionRecordMapper" >
+  <resultMap id="BaseResultMap" type="com.guigu.entity.TransactionRecord" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="cardno" property="cardno" jdbcType="VARCHAR" />
+    <result column="transaction_date" property="transactionDate" jdbcType="TIMESTAMP" />
+    <result column="expense" property="expense" jdbcType="DOUBLE" />
+    <result column="income" property="income" jdbcType="DOUBLE" />
+    <result column="balance" property="balance" jdbcType="DOUBLE" />
+    <result column="transaction_type" property="transactionType" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, cardno, transaction_date, expense, income, balance, transaction_type, remark
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.guigu.entity.TransactionRecordExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from transaction_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from transaction_record
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from transaction_record
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.guigu.entity.TransactionRecordExample" >
+    delete from transaction_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.guigu.entity.TransactionRecord" >
+    insert into transaction_record (cardno, transaction_date, 
+      expense, income, balance, 
+      transaction_type)
+    values (#{cardno,jdbcType=VARCHAR}, now(), 
+      #{expense,jdbcType=DOUBLE}, #{income,jdbcType=DOUBLE}, #{balance,jdbcType=DOUBLE}, 
+      #{transactionType,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.guigu.entity.TransactionRecord" >
+    insert into transaction_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="cardno != null" >
+        cardno,
+      </if>
+      <if test="transactionDate != null" >
+        transaction_date,
+      </if>
+      <if test="expense != null" >
+        expense,
+      </if>
+      <if test="income != null" >
+        income,
+      </if>
+      <if test="balance != null" >
+        balance,
+      </if>
+      <if test="transactionType != null" >
+        transaction_type,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="cardno != null" >
+        #{cardno,jdbcType=VARCHAR},
+      </if>
+      <if test="transactionDate != null" >
+        #{transactionDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expense != null" >
+        #{expense,jdbcType=DOUBLE},
+      </if>
+      <if test="income != null" >
+        #{income,jdbcType=DOUBLE},
+      </if>
+      <if test="balance != null" >
+        #{balance,jdbcType=DOUBLE},
+      </if>
+      <if test="transactionType != null" >
+        #{transactionType,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.guigu.entity.TransactionRecordExample" resultType="java.lang.Integer" >
+    select count(*) from transaction_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <select id="select" parameterType="com.guigu.entity.QueryVO" resultMap="BaseResultMap">
+  	SELECT * from transaction_record
+  	<where>
+  		<if test="startDate!=null and startDate!='' and  stopDate!=null and stopDate!='' and id!=null and id!='' ">
+  			and transaction_date BETWEEN #{startDate} and #{stopDate} and cardno=#{id}
+  		</if>
+  	</where>LIMIT #{pageNum},#{maxPage}
+  </select>
+  <select id="count" parameterType="com.guigu.entity.QueryVO" resultType="int">
+  	SELECT count(*) from transaction_record
+  	<where>
+  		<if test="startDate!=null and startDate!='' and  stopDate!=null and stopDate!='' and id!=null and id!='' ">
+  			and transaction_date BETWEEN #{startDate} and #{stopDate} and cardno=#{id}
+  		</if>
+  	</where>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update transaction_record
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.cardno != null" >
+        cardno = #{record.cardno,jdbcType=VARCHAR},
+      </if>
+      <if test="record.transactionDate != null" >
+        transaction_date = #{record.transactionDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.expense != null" >
+        expense = #{record.expense,jdbcType=DOUBLE},
+      </if>
+      <if test="record.income != null" >
+        income = #{record.income,jdbcType=DOUBLE},
+      </if>
+      <if test="record.balance != null" >
+        balance = #{record.balance,jdbcType=DOUBLE},
+      </if>
+      <if test="record.transactionType != null" >
+        transaction_type = #{record.transactionType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update transaction_record
+    set id = #{record.id,jdbcType=INTEGER},
+      cardno = #{record.cardno,jdbcType=VARCHAR},
+      transaction_date = #{record.transactionDate,jdbcType=TIMESTAMP},
+      expense = #{record.expense,jdbcType=DOUBLE},
+      income = #{record.income,jdbcType=DOUBLE},
+      balance = #{record.balance,jdbcType=DOUBLE},
+      transaction_type = #{record.transactionType,jdbcType=VARCHAR},
+      remark = #{record.remark,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.guigu.entity.TransactionRecord" >
+    update transaction_record
+    <set >
+      <if test="cardno != null" >
+        cardno = #{cardno,jdbcType=VARCHAR},
+      </if>
+      <if test="transactionDate != null" >
+        transaction_date = #{transactionDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expense != null" >
+        expense = #{expense,jdbcType=DOUBLE},
+      </if>
+      <if test="income != null" >
+        income = #{income,jdbcType=DOUBLE},
+      </if>
+      <if test="balance != null" >
+        balance = #{balance,jdbcType=DOUBLE},
+      </if>
+      <if test="transactionType != null" >
+        transaction_type = #{transactionType,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.guigu.entity.TransactionRecord" >
+    update transaction_record
+    set cardno = #{cardno,jdbcType=VARCHAR},
+      transaction_date = #{transactionDate,jdbcType=TIMESTAMP},
+      expense = #{expense,jdbcType=DOUBLE},
+      income = #{income,jdbcType=DOUBLE},
+      balance = #{balance,jdbcType=DOUBLE},
+      transaction_type = #{transactionType,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
