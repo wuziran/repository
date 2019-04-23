@@ -31,4 +31,21 @@ public class EmpController {
 		map.put("total", es.count(v));
 		return map;
 	}
+	
+	@RequestMapping("empselect")
+	public Map empselect(Emp emp){
+		Map map = es.Empselect(emp);
+		return map;
+	}
+	
+	@RequestMapping("updatedept")
+	public int empdupdate(Emp emp){
+		int i = es.Empupdate(emp);
+		return i;
+	}
+	@RequestMapping("deleteEmp")
+	public int deleteEmp(int[] idlist){
+		int i = es.delEmp(idlist);
+		return i;
+	}
 }

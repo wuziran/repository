@@ -19,7 +19,7 @@ public interface EmpMapper {
     int insert(Emp record);
 
     int insertSelective(Emp record);
-
+    int deleteEmp(int[] id);
     List<Emp> selectByExample(EmpExample example);
     List<Emp> select(QueryVO vo);
     int count(QueryVO vo);
