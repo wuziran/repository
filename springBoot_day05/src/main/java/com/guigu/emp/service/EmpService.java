@@ -21,4 +21,8 @@ public class EmpService {
 		int count = mapper.count(vo);
 		return count;
 	}
+	public int count1(QueryVO vo){
+		int count = mapper.count(vo);
+		return count;
+	}
 }
