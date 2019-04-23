@@ -42,4 +42,8 @@ public class EmpService {
 		int i = updatemapper.Empupdate(emp);
 		return i;
 	}
+	public int delEmp(int[] id){
+		int count = mapper.deleteEmp(id);
+		return count;
+	}
 }

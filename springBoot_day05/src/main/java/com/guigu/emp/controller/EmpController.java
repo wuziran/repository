@@ -43,5 +43,9 @@ public class EmpController {
 		int i = es.Empupdate(emp);
 		return i;
 	}
-	
+	@RequestMapping("deleteEmp")
+	public int deleteEmp(int[] idlist){
+		int i = es.delEmp(idlist);
+		return i;
+	}
 }

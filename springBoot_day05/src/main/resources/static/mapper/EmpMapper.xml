@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.guigu.emp.dao.EmpMapper" >
+
   <resultMap id="BaseResultMap" type="com.guigu.emp.pojo.Emp" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="empNum" property="empnum" jdbcType="VARCHAR" />
@@ -97,6 +98,8 @@
     from emp
     where id = #{id,jdbcType=INTEGER}
   </select>
+  
+  
   <select id="select" parameterType="com.guigu.emp.pojo.QueryVO" resultMap="BaseResultMap">
   	SELECT e.id,e.empNum,e.empName,e.gender,e.birthday,e.phone,e.address,e.duty,d.* from dept d,emp e 
   	<where>
@@ -112,6 +115,8 @@
   		</if>
   	</where>LIMIT #{pageNum},#{MaxPage}
   </select>
+  
+  
   <select id="count" parameterType="com.guigu.emp.pojo.QueryVO" resultType="int">
   	SELECT count(*) from dept d,emp e 
   	<where>
@@ -127,6 +132,12 @@
   		</if>
   	</where>
   </select>
+  <delete id="deleteEmp" parameterType="int">
+  	 delete from emp
+    where id in <foreach collection="array" open="(" close=")" item="k" separator=",">
+    	#{k}
+    </foreach>
+  </delete>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from emp
     where id = #{id,jdbcType=INTEGER}
