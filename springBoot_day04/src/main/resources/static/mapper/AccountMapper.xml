@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.guigu.dao.AccountMapper" >
-  <resultMap id="BaseResultMap" type="com.guigu.entity.Account" >
+<mapper namespace="com.guigu.git.dao.AccountMapper" >
+  <resultMap id="BaseResultMap" type="com.guigu.git.pojo.Account" >
     <id column="cardno" property="cardno" jdbcType="VARCHAR" />
     <result column="password" property="password" jdbcType="VARCHAR" />
     <result column="balance" property="balance" jdbcType="DOUBLE" />
@@ -68,7 +68,7 @@
   <sql id="Base_Column_List" >
     cardno, password, balance, status
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.guigu.entity.AccountExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.guigu.git.pojo.AccountExample" >
     select
     <if test="distinct" >
       distinct
@@ -92,25 +92,25 @@
     delete from account
     where cardno = #{cardno,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.guigu.entity.AccountExample" >
+  <delete id="deleteByExample" parameterType="com.guigu.git.pojo.AccountExample" >
     delete from account
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.guigu.entity.Account" >
+  <insert id="insert" parameterType="com.guigu.git.pojo.Account" >
     insert into account (cardno, password, balance, 
       status)
     values (#{cardno,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{balance,jdbcType=DOUBLE}, 
       #{status,jdbcType=INTEGER})
   </insert>
-  <select id="login" parameterType="com.guigu.entity.Account" resultType="int">
+  <select id="login" parameterType="com.guigu.git.pojo.Account" resultType="int">
   	select count(*) from account where cardno=#{cardno} and password=#{password} 
   </select>
   <select id="findMoney" parameterType="String" resultType="String">
   	select balance from account where cardno=#{cardno}
   </select>
-  <insert id="insertSelective" parameterType="com.guigu.entity.Account" >
+  <insert id="insertSelective" parameterType="com.guigu.git.pojo.Account" >
     insert into account
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="cardno != null" >
@@ -141,7 +141,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.guigu.entity.AccountExample" resultType="java.lang.Integer" >
+  <select id="countByExample" parameterType="com.guigu.git.pojo.AccountExample" resultType="java.lang.Integer" >
     select count(*) from account
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -177,7 +177,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.guigu.entity.Account" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.guigu.git.pojo.Account" >
     update account
     <set >
       <if test="password != null" >
@@ -192,18 +192,18 @@
     </set>
     where cardno = #{cardno,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.guigu.entity.Account" >
+  <update id="updateByPrimaryKey" parameterType="com.guigu.git.pojo.Account" >
     update account
     set password = #{password,jdbcType=VARCHAR}<!-- ,
       balance = #{balance,jdbcType=DOUBLE},
       status = #{status,jdbcType=INTEGER} -->
     where cardno = #{cardno,jdbcType=VARCHAR}
   </update>
-  <update id="updateA" parameterType="com.guigu.entity.Account">
+  <update id="updateA" parameterType="com.guigu.git.pojo.Account">
   	 update account set balance=balance-#{balance,jdbcType=DOUBLE}
   	 where cardno = #{cardno,jdbcType=VARCHAR}
   </update>
-  <update id="updateB" parameterType="com.guigu.entity.Account">
+  <update id="updateB" parameterType="com.guigu.git.pojo.Account">
   	 update account set balance=balance+#{balance,jdbcType=DOUBLE}
   	 where cardno = #{cardno,jdbcType=VARCHAR}
   </update>

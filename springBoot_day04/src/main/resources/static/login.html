@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="js/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+</head>
+<body>
+<div align="center">
+	<div style="border: 1px solid red;width:400px;height:250px;background-color:#90EE90;text-align: center">
+	<br>
+		<h3>个人网上银行</h3><br>
+		卡号：<input id="cardno"><br>
+		密码：<input type="password" id="password"><br><br>
+			<input type="button" onclick="login()" value="登录网上银行">
+	</div>
+</div>
+</body>
+<script type="text/javascript">
+		var a=0;
+		var cardno11;
+		function login(){
+			var cardno=$('#cardno').val();
+			var password=$('#password').val();
+			if(password.length!=0){
+				$.ajax({
+					type:"post",
+					url:"login",
+					data:{
+						cardno:cardno,
+						password:password,
+					},
+					dataType:"json",
+					success: function(data) {
+						if(data>0){
+							if(data==3){
+								alert("该账号已冻结")
+							}else{
+								location.href='index.html';
+							}
+						}else{
+							alert(cardno11)
+							if(cardno11!=$('#cardno').val()){
+								a=1;
+							}else{
+								a++;
+							}
+							if(a==3){
+								$.ajax({
+									type:"post",
+									url:"update1",
+									data:{
+										cardno:cardno11,
+									},
+									success: function(data) {
+										alert("该账号已冻结")
+									},
+								})
+								a=0;
+							}
+							cardno11=cardno;
+						}
+					},
+				})
+			}else{
+				alert('密码不能为空')
+			}
+			
+			
+		}
+	</script>
+</html>

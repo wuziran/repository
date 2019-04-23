@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.guigu.dao.TransactionRecordMapper" >
-  <resultMap id="BaseResultMap" type="com.guigu.entity.TransactionRecord" >
+<mapper namespace="com.guigu.git.dao.TransactionRecordMapper" >
+  <resultMap id="BaseResultMap" type="com.guigu.git.pojo.TransactionRecord" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="cardno" property="cardno" jdbcType="VARCHAR" />
     <result column="transaction_date" property="transactionDate" jdbcType="TIMESTAMP" />
@@ -72,7 +72,7 @@
   <sql id="Base_Column_List" >
     id, cardno, transaction_date, expense, income, balance, transaction_type, remark
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.guigu.entity.TransactionRecordExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.guigu.git.pojo.TransactionRecordExample" >
     select
     <if test="distinct" >
       distinct
@@ -96,13 +96,13 @@
     delete from transaction_record
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.guigu.entity.TransactionRecordExample" >
+  <delete id="deleteByExample" parameterType="com.guigu.git.pojo.TransactionRecordExample" >
     delete from transaction_record
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.guigu.entity.TransactionRecord" >
+  <insert id="insert" parameterType="com.guigu.git.pojo.TransactionRecord" >
     insert into transaction_record (cardno, transaction_date, 
       expense, income, balance, 
       transaction_type)
@@ -110,7 +110,7 @@
       #{expense,jdbcType=DOUBLE}, #{income,jdbcType=DOUBLE}, #{balance,jdbcType=DOUBLE}, 
       #{transactionType,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.guigu.entity.TransactionRecord" >
+  <insert id="insertSelective" parameterType="com.guigu.git.pojo.TransactionRecord" >
     insert into transaction_record
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -165,13 +165,13 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.guigu.entity.TransactionRecordExample" resultType="java.lang.Integer" >
+  <select id="countByExample" parameterType="com.guigu.git.pojo.TransactionRecordExample" resultType="java.lang.Integer" >
     select count(*) from transaction_record
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
-  <select id="select" parameterType="com.guigu.entity.QueryVO" resultMap="BaseResultMap">
+  <select id="select" parameterType="com.guigu.git.pojo.QueryVO" resultMap="BaseResultMap">
   	SELECT * from transaction_record
   	<where>
   		<if test="startDate!=null and startDate!='' and  stopDate!=null and stopDate!='' and id!=null and id!='' ">
@@ -179,7 +179,7 @@
   		</if>
   	</where>LIMIT #{pageNum},#{maxPage}
   </select>
-  <select id="count" parameterType="com.guigu.entity.QueryVO" resultType="int">
+  <select id="count" parameterType="com.guigu.git.pojo.QueryVO" resultType="int">
   	SELECT count(*) from transaction_record
   	<where>
   		<if test="startDate!=null and startDate!='' and  stopDate!=null and stopDate!='' and id!=null and id!='' ">
@@ -233,7 +233,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.guigu.entity.TransactionRecord" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.guigu.git.pojo.TransactionRecord" >
     update transaction_record
     <set >
       <if test="cardno != null" >
@@ -260,7 +260,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.guigu.entity.TransactionRecord" >
+  <update id="updateByPrimaryKey" parameterType="com.guigu.git.pojo.TransactionRecord" >
     update transaction_record
     set cardno = #{cardno,jdbcType=VARCHAR},
       transaction_date = #{transactionDate,jdbcType=TIMESTAMP},
