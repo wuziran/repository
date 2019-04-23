@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<script type="text/javascript" src="js/jquery.easyui.min.js"></script>
+		<script src="locale/easyui-lang-zh_CN.js"></script>
+		<link rel="stylesheet" href="themes/icon.css" />
+		<link rel="stylesheet" href="themes/default/easyui.css" />
+</head>
+<body>
+<br>
+  卡号：<font id="fontt">${name}</font>&nbsp;&nbsp;&nbsp;&nbsp;<a href="loginexit.do">退出登录</a>
+  <br><br>
+  <div align="center">
+	  <div style="border: 3px solid #91CFFE; width:80%;height:350px">
+	  		<div style="border: 3px solid red;width:25%;height:100%;float:left;">
+	  			<br><br><br><br>
+	  			<a href="javascript:yue()">查询余额</a><br><br>
+	  			<a href="javascript:zhuanzhang()">转账</a><br><br>
+	  			<a href="javascript:jiaoyi()">查询交易记录</a><br><br>
+	  			<a href="javascript:xiugai()">修改密码</a><br><br>
+	  		</div>
+	  		<div style="border: 2px solid #91CFFE;width:73%;height:100%;float:right;"	>
+	  			<div id="divv1" style="width:100%;height:100%">
+	  				<br><br><br><br>
+	  				<h1>欢迎使用个人网上银行~~</h1>
+	  			</div>
+	  			<div id="divv2" style="width:100%;height:100%">
+	  				<br><br>
+	  				<h1>您的账户余额是:</h1>
+	  				人民币：<h2 style="color:red" id="hh2"></h2>
+	  			</div>
+	  			<div id="divv3" style="width:100%;height:100%">
+	  				<br><br>
+	  				<h3>当前操作：转账,请输入转入账号和余额后点“转账”按钮</h3>
+	  				<br>
+	  				转入账号：<input id="user" onblur="zhanghaoblur()"/><br>
+	  				转账金额：<input id="money"/><br><br>
+	  				<input type="button" onclick="bring()" value="转账">
+	  			</div>
+	  			<div id="divv4" style="width:100%;height:100%">
+		  			<div id="manager_tool">
+		  				查询日期范围：<input  id="date1"  type= "text" class= "easyui-datebox" required ="required"> </input>到
+		  				 <input  id="date2"  type= "text" class= "easyui-datebox" required ="required">
+		  				 <input type="button" onclick="datechaxun()" value="查询"/><br>
+	  				 </div>
+	  				 <table id="tablee1">
+	  				 	
+	  				 </table>
+	  			</div>
+	  			<div id="divv5" style="width:100%;height:100%">
+	  				<br><br>
+	  				<h3>当前操作：修改密码,请按要求填写完整后点“修改”按钮</h3>
+	  				<br>
+	  				请输入当前的密码：<input type="password" id="mima1" onblur="dangqianmima()"/><br>
+	  				请输入新的密码：<input type="password" id="mima2"/><br>
+	  				请再次输入新的密码：<input type="password" id="mima3"/><br><br>
+	  				<input type="button" onclick="mimaxiugai()" value="修改"/>
+	  			</div>
+	  		</div>
+	  </div>
+ </div>
+</body>
+<script type="text/javascript">
+
+var haomoney = 0;
+	$(function(){
+		$("#divv2").hide();
+		$("#divv3").hide();
+		$("#divv4").hide();
+		$("#divv5").hide();
+		onload();
+	});
+	function onload(){
+		var fontt = $("#fontt").text();
+		$.ajax({
+			url:"savebank.do",
+			data:{
+				"fontt":fontt
+			},
+			success:function(data){
+				haomoney = data;
+				$("#hh2").empty();
+				$("#hh2").append(data+"元");
+			}
+		});
+	}
+	function yue(){
+		$("#divv1").hide();
+		$("#divv2").show();
+		$("#divv3").hide();
+		$("#divv4").hide();
+		$("#divv5").hide();
+		
+	}
+	function zhuanzhang(){
+		$("#divv1").hide();
+		$("#divv2").hide();
+		$("#divv3").show();
+		$("#divv4").hide();
+		$("#divv5").hide();
+	}
+	function jiaoyi(){
+		$("#divv1").hide();
+		$("#divv2").hide();
+		$("#divv3").hide();
+		$("#divv4").show();
+		$("#divv5").hide();
+	}
+	function xiugai(){
+		$("#divv1").hide();
+		$("#divv2").hide();
+		$("#divv3").hide();
+		$("#divv4").hide();
+		$("#divv5").show();
+	}
+	var user1 = 0;
+	function zhanghaoblur(){
+		var user = $("#user").val();
+		var fontt = $("#fontt").text();
+		if(fontt==user){
+			alert("不能输入自己的账户哦！");
+		}else{
+			$.ajax({
+				url:"zhanghaosave.do",
+				data:{
+					"user":user
+				},
+				success:function(data){
+						if(data>0){
+							user1 = user;
+						}else{
+							alert("该目标账户不存在,请重试！");
+						}
+				}
+			});
+		}
+	}
+	function bring(){
+		var user = $("#user").val();
+		var fontt = $("#fontt").text();
+		var money = $("#money").val();
+		if(user.length>0&&money.length>0){
+			if(fontt==user){
+				alert("不能输入自己的账户哦！");
+			}else{
+				if(user1>0){
+					$.ajax({
+						url:"moneysave.do",
+						data:{
+							"fontt":fontt,
+							"user":user,
+							"money":money,
+							"haomoney":haomoney
+						},
+						success:function(date){
+							if(date==2){
+								alert("金额已超出当前余额,请重试！");
+								onload();
+							}else if(date>0){
+								alert("转账成功！");
+								onload();
+								yue();
+							}else{
+								alert("转账失败,转账金额不能多于当前余额！");
+								onload();
+								yue();
+							}
+						}
+					});
+				}else{
+					alert("该目标账户不存在,请重试！");
+				}
+			}
+		}else{
+			alert("卡号和金额不能为空！！");
+		}
+	}
+	var userpwd = 0;
+	function dangqianmima(){
+		var mima1 = $("#mima1").val();
+		var fontt = $("#fontt").text();
+		$.ajax({
+			url:"selectpwd.do",
+			data:{
+				"cardno":fontt,
+				"password":mima1
+			},
+			success:function(date){
+				userpwd = date;
+				if(date==0){
+					alert("您的当前密码不正确,请重新输入");
+				}
+			}
+		});
+	}
+	function mimaxiugai(){
+		var mima1 = $("#mima1").val();
+		var mima2 = $("#mima2").val();
+		var mima3 = $("#mima3").val();
+		var fontt = $("#fontt").text();
+		if(mima1.length>0&&mima2.length>0&&mima3.length>0){
+			if(userpwd==1){
+					if(mima2==mima3){
+						$.ajax({
+							url:"updatepwd.do",
+							data:{
+								"cardno":fontt,
+								"password":mima3
+							},
+							success:function(date){
+								if(date>0){
+									alert("修改密码成功！");
+									location.href="index.jsp";
+								}
+							}
+						});
+					}else{
+						alert("两次输入的新密码不相同！");
+					}
+			}else{
+				alert("您的当前密码不正确,请重新输入");
+			}
+		}else{
+			alert("请将表单填写完整");
+		}
+	}
+	function datechaxun(){
+		var date1 = $("#date1").datebox("getValue");
+		var date2 = $("#date2").datebox("getValue");
+		var fontt = $("#fontt").text();
+		if(date1.length>0&&date2.length>0){
+			$("#tablee1").datagrid({
+				url:"dateselect.do?aflterdate="+date1+"&enddate="+date2+"&user="+fontt,
+				toolbar: '#manager_tool',
+				columns: [
+					[
+					 {checkbox: true,field: "id",title: "编号",toolbar: "#manager_tool",},
+					 {field: "transaction_date",title: "交易时间",align:'center',width: 100,},
+					 {field: "expense",title: "支出",align:'center',width: 150,},
+					 {field: "income",title: "存入",align:'center',width: 80,},
+					 {field: "balance",title: "账户余额",align:'center',width: 80,},
+					 {field: "transaction_type",title: "交易类型",align:'center',width: 80,},
+					 {field: "remark",title: "备注",align:'center',width: 80,},
+					 
+					]
+				],
+				pagination: true,
+				pageSize: 4,
+				pageList: [2,4, 5, 10],
+				pageNumber: 1,
+				fit: true,
+				fitColumns: true,
+				striped: true,
+				rownumbers: true,
+				border: false,
+			});
+		}
+	}
+</script>
+</html>
