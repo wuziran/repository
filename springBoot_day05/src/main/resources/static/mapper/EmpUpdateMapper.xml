@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.guigu.emp.dao.EmpUpdateMapper" >
+	<select id="Empselect" parameterType="com.guigu.emp.pojo.Emp" resultType="com.guigu.emp.pojo.Emp">
+		select * from emp where id=#{id}
+	</select>
+	<select id="Deptselect" resultType="com.guigu.emp.pojo.Dept">
+		select* from dept
+	</select>
+	<update id="Empupdate" parameterType="com.guigu.emp.pojo.Emp">
+		update emp set empNum=#{empnum},empName=#{empname}, gender=#{gender},
+		birthday={birthday},phone=#{phone},address=#{address},duty=#{duty},deptId=#{deptid}
+		where id=#{id}
+	</update>
+</mapper>

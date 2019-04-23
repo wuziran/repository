@@ -31,4 +31,11 @@ public class EmpController {
 		map.put("total", es.count(v));
 		return map;
 	}
+	
+	@RequestMapping("empselect")
+	public Map empselect(Emp emp){
+		Map map = es.Empselect(emp);
+		System.out.println(map);
+		return map;
+	}
 }
