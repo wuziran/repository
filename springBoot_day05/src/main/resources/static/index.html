@@ -21,16 +21,7 @@
 	</div>
 </table> 
 <form id="manage_edit" style="margin:0;padding:5px 0 0 25px;color:#333;">
-		<font name="font" style="display: none;"></font>
-	<p>员工编号:<input readonly="readonly" id="num" name="num" class="textbox" style="width:200px;"></p>
-	<p>员工姓名:<input type="text" id="name" name="name" class="textbox" style="width:200px;"></p>
-	<p>性&nbsp;&nbsp;别:<input type="radio" checked="checked" name="name">
-						<input type="radio" checked="checked" name="name"></p>
-	<p>生日:<input type="text" name="name" class="textbox" style="width:200px;"></p>
-	<p>电话:<input type="text" name="name" class="textbox" style="width:200px;"></p>
-	<p>地址:<input type="text" name="name" class="textbox" style="width:200px;"></p>
-	<p>职务:<input type="text" name="name" class="textbox" style="width:200px;"></p>
-	<p>部门:<select name="select11"></select></p>
+		
 </form>
 <!-- <form id="manage_add" style="margin: 0;padding: 5px 0 0 25px;color:#333;font-size: 20px;">
 	<p>名&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;称:
@@ -113,8 +104,22 @@
 									success: function(data) {
 										$.messager.progress('close');
 										$('#manage_edit').dialog('open');
-										var input = "";
-
+										$("#manage_edit").empty();
+										var input = "<input name='font' style='display: none;' value='"+data['emp'].id+"'></input>"+
+										"<p>员工编号:<input readonly='readonly' id='num' name='num' value='"+data['emp'].empnum+"' class='textbox' style='width:200px;'></p>"+
+										"<p>员工姓名:<input type='text' id='name' name='name' class='textbox' value='"+data['emp'].empname+"' style='width:200px;'></p>"+
+										"<p>性&nbsp;&nbsp;别:<input type='radio' checked='checked' name='radio' value='男'>"+
+												"<input type='radio' checked='checked' name='radio' value='女'></p>"+
+										"<p>生日:<input type='text' name='day' class='easyui-datebox' required ='required' value='"+data['emp'].birthday+"' style='width:200px;'></p>"+
+										"<p>电话:<input type='text' name='phone1' class='textbox' value='"+data['emp'].phone+"' style='width:200px;'></p>"+
+										"<p>地址:<input type='text' name='cuty' class='textbox' value='"+data['emp'].address+"' style='width:200px;'></p>"+
+										"<p>职务:<input type='text' name='zhiwu' class='textbox' value='"+data['emp'].duty+"' style='width:200px;'></p>"+
+										"<p>部门:<select name='select11'></select></p>";
+										$("#manage_edit").append(input);
+										$.each(data.list,function(index,kk){
+											var input1 = "<option value='"+kk.deptid+"'>"+kk.deptname+"</option>";
+											$("select[name='select11']").append(input1);
+										});
 									},
 									error: function() {
 										$.messager.alert('警告操作', '服务器返回数据失败', 'warning');
@@ -224,8 +229,15 @@
 						url: "updatedept",
 						type: "post",
 						data: {
-							id: $('#id').val(),
-							dname: $('#dname').val(),
+							id:$("input[name='font']").val(),
+							empnum:$("input[name='num']").val(),
+							empname:$("input[name='name']").val(),
+							gender:$("input[name='radio']:checked").val(),
+							birthday:$("input[name='day']").val(),
+							phone:$("input[name='phone1']").val(),
+							address:$("input[name='cuty']").val(),
+							duty:$("input[name='zhiwu']").val(),
+							deptid:$("select[name='select11']").val()
 						},
 						beforeSend: function() {
 							$.messager.progress({

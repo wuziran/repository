@@ -35,11 +35,10 @@ public class EmpController {
 	@RequestMapping("empselect")
 	public Map empselect(Emp emp){
 		Map map = es.Empselect(emp);
-		System.out.println(map);
 		return map;
 	}
 	
-	@RequestMapping("empupdate")
+	@RequestMapping("updatedept")
 	public int empdupdate(Emp emp){
 		int i = es.Empupdate(emp);
 		return i;

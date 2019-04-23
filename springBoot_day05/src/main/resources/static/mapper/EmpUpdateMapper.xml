@@ -9,7 +9,7 @@
 	</select>
 	<update id="Empupdate" parameterType="com.guigu.emp.pojo.Emp">
 		update emp set empNum=#{empnum},empName=#{empname}, gender=#{gender},
-		birthday={birthday},phone=#{phone},address=#{address},duty=#{duty},deptId=#{deptid}
+		birthday=#{birthday},phone=#{phone},address=#{address},duty=#{duty},deptId=#{deptid}
 		where id=#{id}
 	</update>
 </mapper>
