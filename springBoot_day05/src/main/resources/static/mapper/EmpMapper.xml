@@ -108,7 +108,7 @@
   			and e.empname like "%"#{e.empname}"%"
   		</if>
   		<if test="e.phone!=null and e.phone!='' ">
-  			and e.phone=#{e.phone}
+  			and e.phone like "%"#{e.phone}"%"
   		</if>
   		<if test="d.deptname!=null and d.deptname!='' ">
   			and d.deptname=#{d.deptname}
