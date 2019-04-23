@@ -161,4 +161,11 @@
     set deptName = #{deptname,jdbcType=VARCHAR}
     where deptId = #{deptid,jdbcType=INTEGER}
   </update>
+  
+  <select id="deptsel" resultType="com.guigu.emp.pojo.Dept">
+  
+  	select * from dept
+  
+  </select>
+  
 </mapper>

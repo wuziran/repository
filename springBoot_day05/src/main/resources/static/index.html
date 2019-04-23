@@ -10,7 +10,10 @@
 	<link rel="stylesheet" href="easyui/themes/icon.css" />
 </head>
 <body>
+<br>
+<a href="javascript:add()" class="easyui-linkbutton">增加员工</a>
 <table id="dg" class="easyui-datagrid">
+	
 	<div style="padding: 0 0 0 7px;color:#333;" align="center" id="tt" >
 		员工姓名：<input type="text" class="textbox" id="ename" name="ename" style="width:100px;height:22px;"/>
 		员工电话：<input type="text" class="textbox" id="phone" name="phone" style="width:100px;height:22px;"/>
@@ -20,6 +23,22 @@
 		<a href="javascript:show()" class="easyui-linkbutton" iconCls="icon-search">查询</a>
 	</div>
 </table> 
+
+	<div id="add" style="display: none;text-align: center;">
+		<br>
+		员工编号<input id="id"/><br><br>
+		员工姓名<input id="name" /><br><br>
+		性别<input name="tl" type="radio" checked="checked" value="男"/>男
+		   <input name="tl" type="radio" value="女"/>女<br><br>
+		 生日<input type="text" id="birthday" class="easyui-datebox" editable="false"><br><br>
+		电话<input id="phones" /><br><br>
+		地址<input id="address" /><br><br>
+		职务<input id="zhiwu"/><br><br>
+		部门<select id="bumen"></select><br><br>
+		  <button  class="easyui-linkbutton" onclick="tijiao()">提交</button>
+	   	<button  class="easyui-linkbutton" onclick="quxiao()">取消</button>
+	</div>
+	
 <!-- <form id="manage_edit" style="margin:0;padding:5px 0 0 25px;color:#333;">
 	<p>编&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号:<input readonly="readonly" id="id" name="id" class="textbox" style="width:200px;"></p>
 	<p>名&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;称:<input type="text" id="dname" name="dname" class="textbox" style="width:200px;"></p>
@@ -62,6 +81,67 @@
 			});  */
 			
 		})
+			function add(){
+			$.ajax({
+				url: "deptsel",
+				success: function(data) {
+					alert(data[0].deptid);
+					alert(data[0].deptname);
+					for(var i=0;i<data.length;i++){
+						 $("#bumen").append("<option value='"+data[i].deptid+"'>"+data[i].deptname+"</option>");
+					}
+					
+					
+				},
+			});
+			
+			$('#add').dialog({
+			    title: '添加员工',
+			    width: 400,
+			    height: 480,
+			    closed: false,
+			    cache: false,
+			    modal: true
+			});
+			
+			}
+		
+			function tijiao(){
+				
+				var id = $("#id").val();
+				var name = $("#name").val();
+			    var sex = $('input[name="tl"]:checked').val();
+				var birthday = $("#birthday").datetimebox('getText');
+				var phone = $("#phones").val();
+				var address = $("#address").val();
+				var zhiwu = $("#zhiwu").val();
+				var dept = $("#bumen").val();
+				
+				$.ajax({
+					url: "Empadd",
+					data:{
+						id:id,
+						name:name,
+						sex:sex,
+						birthday:birthday,
+						phone:phone,
+						address:address,
+						zhiwu:zhiwu,
+						dept:dept
+					},success: function(data) {
+						if(data>0){
+							$("#add").dialog('close').form('reset');
+							show();
+						}
+					},
+				});
+				
+			}
+			
+			function quxiao(){
+				$("#add").dialog('close').form('reset');
+			}
+		
 			function show(){
 				var dept=$('#dept').val();
 				var phone=$('#phone').val();

@@ -100,6 +100,22 @@ public class Emp {
         this.deptid = deptid;
     }
 
+    
+    
+
+	public Emp(String empnum, String empname, String gender, String birthday, String phone, String address, String duty,
+			Integer deptid) {
+		super();
+		this.empnum = empnum;
+		this.empname = empname;
+		this.gender = gender;
+		this.birthday = birthday;
+		this.phone = phone;
+		this.address = address;
+		this.duty = duty;
+		this.deptid = deptid;
+	}
+
 	public Emp(Integer id, String empnum, String empname, String gender, String birthday, String phone, String address,
 			String duty, Integer deptid, Dept d) {
 		super();

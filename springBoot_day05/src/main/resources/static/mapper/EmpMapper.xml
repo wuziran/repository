@@ -306,4 +306,12 @@
       deptId = #{deptid,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
+  <insert id="Empadd" parameterType="com.guigu.emp.pojo.Emp">
+  
+  insert into emp(empNum,empName,gender,birthday,phone,address,duty,deptId) values(#{empnum},#{empname},#{gender},#{birthday},#{phone},#{address},#{duty},#{deptid});
+  
+  </insert>
+  
+  
 </mapper>
