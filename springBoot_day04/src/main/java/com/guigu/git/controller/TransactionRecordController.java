@@ -20,7 +20,7 @@ import com.guigu.git.service.TransactionService;
 public class TransactionRecordController {
 	@Autowired
 	TransactionService ts;
-	@RequestMapping("/find.do")
+	@RequestMapping("find")
 	public @ResponseBody Map<String, Object> find(QueryVO v,HttpSession session,int rows,int page){
 		String cardno =(String) session.getAttribute("cardno");
 		v.setId(cardno);

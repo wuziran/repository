@@ -38,7 +38,7 @@ public class AccountController {
 		}
 		return login;
 	}
-	@RequestMapping("/selectMoney.do")
+	@RequestMapping("selectMoney")
 	public @ResponseBody String select(HttpSession session){
 		String balance = as.findMoney((String)session.getAttribute("cardno"));
 		return balance;
@@ -48,7 +48,7 @@ public class AccountController {
 		String name=(String)session.getAttribute("name");
 		return name;
 	}
-	@RequestMapping("/selectPwd.do")
+	@RequestMapping("selectPwd")
 	public @ResponseBody String selectPwd(String password,HttpSession session){
 		Account a= as.findPwd((String)session.getAttribute("cardno"));
 		if(a.getPassword().equals(password)){
@@ -58,14 +58,14 @@ public class AccountController {
 		}
 		
 	}
-	@RequestMapping("/updatePwd.do")
+	@RequestMapping("updatePwd")
 	public @ResponseBody int updatePwd(Account a,HttpSession session){
 		String c = (String) session.getAttribute("cardno");
 		a.setCardno(c);
 		int count = as.updatePwd(a);
 		return count;
 	}
-	@RequestMapping("/transferAccounts.do")
+	@RequestMapping("transferAccounts")
 	public @ResponseBody int transferAccounts(Account a,HttpSession session){
 		String c = (String) session.getAttribute("cardno");
 		int count = as.transferAccounts(c, a.getBalance(), a.getCardno());
